@@ -8,7 +8,7 @@ pub struct Plugin {
 	pub intensity_range:      f32,
 	pub lum_mod:              f32,
 	#[allow(improper_ctypes_definitions)]
-	transform: unsafe extern "C-unwind" n(x: f32, y: f32, t: f32, fft: &[f32]) -> (f32, f32, f32),
+	transform: unsafe extern "C-unwind" fn(x: f32, y: f32, t: f32, fft: &[f32]) -> (f32, f32, f32),
 }
 
 impl Plugin {
