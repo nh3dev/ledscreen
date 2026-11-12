@@ -8,7 +8,7 @@
 - [ ] serial output support
 - [ ] smear "decay"
 - [ ] savestates + revise how they work
-- [ ] hot reloading
+- [ ] hot reloading the lib functions
 
 ## led board TODO
 - [ ] build at least a row
