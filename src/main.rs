@@ -68,7 +68,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 				});
 			});
 
-			ui.heading(format!("fps {:.0}", 1.0 / ui.ctx().input(|state| state.stable_dt)));
+			ui.heading(format!("fps {:.0}", (1.0 / ui.ctx().input(|state| state.stable_dt)).round_ties_even() ));
 		});
 	})?;
 	
