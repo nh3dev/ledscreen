@@ -63,9 +63,6 @@ impl PluginManager {
 			}
 		});
 
-		// perhaps unnecessary but makes sure plugins load before they can be accessed
-		std::thread::sleep(std::time::Duration::from_millis(200));
-
 		Self { plugs }
 	}
 
@@ -78,10 +75,10 @@ impl PluginManager {
 #[derive(Debug)]
 pub struct Plugin {
 	_lib: Library,
-	pub time_divisor:         f32,
-	pub time_dialation_range: f32,
-	pub intensity_range:      f32,
-	pub lum_mod:              f32,
+	// pub time_divisor:         f32,
+	// pub time_dialation_range: f32,
+	// pub intensity_range:      f32,
+	// pub lum_mod:              f32,
 	#[allow(improper_ctypes_definitions)]
 	transform: unsafe extern "C-unwind" fn(x: f32, y: f32, t: f32, fft: &[f32]) -> (f32, f32, f32),
 }
@@ -93,10 +90,10 @@ impl Plugin {
 
 			Self {
 				transform:           *lib.get(b"transform").unwrap(),
-				time_divisor:         lib.get(b"TIME_DIVISOR").map_or(1000000000.0,  |s: Symbol<*const f32>| **s),
-				time_dialation_range: lib.get(b"TIME_DIALATION_RANGE").map_or(100.0, |s: Symbol<*const f32>| **s),
-				intensity_range:      lib.get(b"INTENSITY_RANGE").map_or(0.01,       |s: Symbol<*const f32>| **s),
-				lum_mod:              lib.get(b"LUM_MOD").map_or(100.0,              |s: Symbol<*const f32>| **s),
+				// time_divisor:         lib.get(b"TIME_DIVISOR").map_or(1000000000.0,  |s: Symbol<*const f32>| **s),
+				// time_dialation_range: lib.get(b"TIME_DIALATION_RANGE").map_or(100.0, |s: Symbol<*const f32>| **s),
+				// intensity_range:      lib.get(b"INTENSITY_RANGE").map_or(0.01,       |s: Symbol<*const f32>| **s),
+				// lum_mod:              lib.get(b"LUM_MOD").map_or(100.0,              |s: Symbol<*const f32>| **s),
 				_lib: lib,
 			}
 		}
