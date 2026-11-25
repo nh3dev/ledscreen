@@ -40,22 +40,20 @@ impl PluginManager {
 					let mut plugs = plugs_.write();
 					std::mem::drop(std::mem::take(&mut *plugs));
 
-					*plugs = new.iter().map(|(_, file)| {
+					*plugs = new.iter().filter_map(|(_, file)| {
 						let out = Path::new(TARGET_DIR).join(file.file_name().unwrap())
 							.with_extension("so");
-
-						dbg!(&file);
 
 						let status = std::process::Command::new("rustc")
 							.args(["--color=always", "--crate-type=dylib", "-o"])
 							.args([&out, file]).output().unwrap();
 
 						if !status.status.success() {
-							println!("{}", std::str::from_utf8(&status.stdout).unwrap());
 							println!("{}", std::str::from_utf8(&status.stderr).unwrap());
+							return None;
 						}
 
-						unsafe { Plugin::new(&out) }
+						unsafe { Some(Plugin::new(&out)) }
 					}).collect::<Vec<_>>().into_boxed_slice();
 
 					old = new;
