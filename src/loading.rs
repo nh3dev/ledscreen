@@ -7,6 +7,7 @@ use parking_lot::{RwLock, RwLockReadGuard};
 
 const TARGET_DIR: &str = "target/libs";
 
+// TODO: switch to our arcswap implemented with AtomicU128 in the future perhaps
 pub struct PluginManager {
 	plugs: Arc<RwLock<Box<[Plugin]>>>,
 }
@@ -37,7 +38,7 @@ impl PluginManager {
 					let _ = std::fs::create_dir(TARGET_DIR);
 
 					let mut plugs = plugs_.write();
-					*plugs = Box::new([]);
+					std::mem::drop(std::mem::take(&mut *plugs));
 
 					*plugs = new.iter().map(|(_, file)| {
 						let out = Path::new(TARGET_DIR).join(file.file_name().unwrap())
