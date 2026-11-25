@@ -46,7 +46,7 @@ impl PluginManager {
 						dbg!(&file);
 
 						let status = std::process::Command::new("rustc")
-							.args(["--crate-type=dylib", "-o"])
+							.args(["--color=always", "--crate-type=dylib", "-o"])
 							.args([&out, &file])
 							.output()
 							.unwrap();
