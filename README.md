@@ -8,6 +8,7 @@
 - [ ] serial output support
 - [ ] smear "decay"
 - [ ] savestates + revise how they work
+- [x] key input
 - [x] hot reloading the lib functions
 
 ## led board TODO
