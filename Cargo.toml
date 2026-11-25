@@ -4,7 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+# audio
 rustfft = "6.4"
 cpal = "0.18"
+
+# display
 eframe = { version = "0.37", default-features = false, features = ["wgpu", "wayland", "x11", "default_fonts"] }
+
+# plugins
 libloading = "0.9"
+parking_lot = "0.13"

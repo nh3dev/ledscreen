@@ -12,6 +12,8 @@ const FFT_SIZE: usize = 1 << 12;
 const WIDTH: usize = 64;
 const HEIGHT: usize = 64;
 
+const LIBS_PATH: &str = "lib";
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let host = cpal::default_host();
 	let dev = host.default_input_device().unwrap();
@@ -25,7 +27,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 	stream.play()?;
 
-	let plugins = loading::Plugin::from_dir("target/libs");
+	let plugins = loading::PluginManager::new(LIBS_PATH);
+
 	let time = std::time::Instant::now();
 
 	let hann = (0..FFT_SIZE).map(|i|
@@ -39,7 +42,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let mut planner = rustfft::FftPlanner::<f32>::new();
 	let fft = planner.plan_fft_forward(FFT_SIZE);
 
-	eframe::run_ui_native("poop", Default::default(), move |ui, _frame| {
+	eframe::run_ui_native("ledscreen", Default::default(), move |ui, _frame| {
 		ui.ctx().request_repaint();
 
 		rx.try_iter().for_each(|f| { buf.pop_front(); buf.push_back(f); });
@@ -48,6 +51,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 			*b = Complex32::new(s * h, 0.0));
 		
 		fft.process(&mut fft_buf);
+
+		let plugins = plugins.get();
 
 		egui::CentralPanel::default().show(ui, |ui| {
 			egui::Frame::canvas(&Default::default()).show(ui, |ui| {
