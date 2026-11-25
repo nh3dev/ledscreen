@@ -48,9 +48,7 @@ impl PluginManager {
 
 						let status = std::process::Command::new("rustc")
 							.args(["--color=always", "--crate-type=dylib", "-o"])
-							.args([&out, &file])
-							.output()
-							.unwrap();
+							.args([&out, file]).output().unwrap();
 
 						if !status.status.success() {
 							println!("{}", std::str::from_utf8(&status.stdout).unwrap());
@@ -73,6 +71,7 @@ impl PluginManager {
 		Self { plugs }
 	}
 
+	#[allow(clippy::type_complexity)]
 	pub fn get<'a>(&'a self) -> DropGuard<RwLockReadGuard<'a, Box<[Plugin]>>, impl FnOnce(RwLockReadGuard<'a, Box<[Plugin]>>)> {
 		DropGuard::new(self.plugs.read(), RwLockReadGuard::unlock_fair)
 	}
