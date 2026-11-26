@@ -1,10 +1,10 @@
 
 ## TODO
 - [ ] midi controller support
-     - [ ] configuration files for different controllers
-	 - [ ] use multiple controllers at once (?) 
+	- [ ] configuration files for different controllers
+	- [ ] use multiple controllers at once (?) 
 - [ ] switch patterns (and display current one on screen)
-     - [ ] toggle audio input mode on/off
+	- [ ] toggle audio input mode on/off
 - [ ] serial output support
 - [ ] smear "decay"
 - [ ] savestates + revise how they work
@@ -15,3 +15,4 @@
 - [ ] build at least a row
 - [ ] esp code
 - [ ] power supply
+- [ ] esp -> led data driver
